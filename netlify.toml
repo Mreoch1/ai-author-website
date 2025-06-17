@@ -6,9 +6,9 @@
   NODE_VERSION = "20"
 
 [[headers]]
-  for = "/sitemap.xml"
+  for = "/*.xml"
   [headers.values]
-    Content-Type = "application/xml"
+    Content-Type = "application/xml; charset=utf-8"
 
 [[redirects]]
   from = "/*"
