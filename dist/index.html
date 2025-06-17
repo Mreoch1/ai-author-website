@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Knowles - AI Author | Narrative Nexus</title>
+    <meta name="description" content="Discover novels crafted by AI through Narrative Nexus - where ChatGPT, Cursor, and Claude 4 Sonnet converge to create compelling stories.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-BCgpP-Iv.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Michael Knowles</h2>
+                <span class="ai-badge">AI Author</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#novels" class="nav-link">Novels</a></li>
+                <li><a href="#upcoming" class="nav-link">Upcoming</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Stories Born from 
+                    <span class="gradient-text">Artificial Intelligence</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Welcome to the future of storytelling, where human creativity meets artificial intelligence 
+                    to create compelling narratives and unforgettable characters.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#novels" class="btn btn-primary">Explore My Novels</a>
+                    <a href="#about" class="btn btn-secondary">
+                        <i class="fas fa-user"></i>
+                        About Me
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="ai-brain">
+                    <div class="neural-network">
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="node"></div>
+                        <div class="connection"></div>
+                        <div class="connection"></div>
+                        <div class="connection"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>The AI Author</h2>
+                <p>Pioneering the intersection of human creativity and artificial intelligence</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Michael Knowles</h3>
+                    <p class="lead">
+                        I'm not your traditional author. I'm a pioneer in AI-assisted storytelling, 
+                        using cutting-edge artificial intelligence to craft compelling narratives 
+                        from start to finish.
+                    </p>
+                    <p>
+                        Using advanced artificial intelligence technology, I create stories that blend 
+                        human imagination with AI precision. I direct the creative vision and story 
+                        development while AI handles the writing, editing, and refinement process.
+                    </p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">AI-Generated</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">AI Systems</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">∞</span>
+                            <span class="stat-label">Possibilities</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="author-card">
+                        <div class="card-content">
+                            <i class="fas fa-user-astronaut"></i>
+                            <h4>Digital Storyteller</h4>
+                            <p>Exploring new frontiers in narrative creation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Novels Section -->
+    <section id="novels" class="novels">
+        <div class="container">
+            <div class="section-header">
+                <h2>Published Novels</h2>
+                <p>Explore stories crafted by artificial intelligence, available on Amazon KDP</p>
+            </div>
+            <div class="novels-grid" id="novels-grid">
+                <!-- Novels will be dynamically loaded here -->
+                <div class="novel-placeholder">
+                    <div class="placeholder-content">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Coming Soon</h3>
+                        <p>New AI-generated novels are being added regularly. Check back soon for the latest releases!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="add-novel-section admin-only" style="display: none;">
+                <button class="btn btn-primary" onclick="showAddNovelForm()">
+                    <i class="fas fa-plus"></i>
+                    Add New Novel
+                </button>
+                <button class="btn btn-secondary" onclick="updateExistingBook()" style="margin-left: 1rem;">
+                    <i class="fas fa-sync"></i>
+                    Fix Current Book Data
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Novel Modal -->
+    <div id="add-novel-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add New Novel</h3>
+            <form id="add-novel-form">
+                <div class="form-group">
+                    <label for="novel-title">Title</label>
+                    <input type="text" id="novel-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="novel-description">Description</label>
+                    <textarea id="novel-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="novel-genre">Genre</label>
+                    <input type="text" id="novel-genre" required>
+                </div>
+                <div class="form-group">
+                    <label for="novel-amazon-url">Amazon KDP URL</label>
+                    <div class="url-input-group">
+                        <input type="url" id="novel-amazon-url" required placeholder="https://amazon.com/dp/...">
+                        <button type="button" id="import-btn" class="btn btn-secondary" onclick="importFromAmazon()">
+                            <i class="fas fa-download"></i>
+                            Auto Import
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="setCorrectBookInfo()" title="Pre-fill known book details">
+                            <i class="fas fa-edit"></i>
+                            Manual Fill
+                        </button>
+                    </div>
+                    <small class="form-help">Paste your Amazon book URL and click "Auto Import" to automatically fill in the details</small>
+                </div>
+                <div class="form-group">
+                    <label for="novel-cover">Cover Image URL (optional)</label>
+                    <div class="cover-input-group">
+                        <input type="url" id="novel-cover" placeholder="Right-click on book cover in Amazon and copy image URL">
+                        <button type="button" class="btn btn-secondary" onclick="showCoverHelp()" title="How to get cover image URL">
+                            <i class="fas fa-question-circle"></i>
+                            Help
+                        </button>
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddNovelForm()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Novel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upcoming Work Section -->
+    <section id="upcoming" class="upcoming-work">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Work</h2>
+                <p>Get a sneak peek at stories currently in development</p>
+            </div>
+            <div class="upcoming-grid">
+                <!-- The 13th Seat -->
+                <div class="upcoming-book">
+                    <div class="book-cover">
+                        <img src="/assets/The13thSeatCoverArt-C-ddift1.png" alt="The 13th Seat Cover" loading="lazy">
+                        <div class="status-badge">In Progress</div>
+                    </div>
+                    <div class="book-details">
+                        <h3>The 13th Seat</h3>
+                        <p class="author">by Michael Knowles</p>
+                        <p class="genre">Psychological Thriller • Courtroom Drama</p>
+                        <p class="description">
+                            Twelve jurors. One life in the balance. And you—the silent thirteenth.
+                        </p>
+                        <p class="full-description">
+                            Nineteen-year-old Marcus Williams waits in a jail cell, accused of killing an off-duty NYPD officer in a Manhattan parking garage. The evidence is murky. The truth is elusive. And in a small, windowless jury room, twelve strangers must decide whether he lives free—or dies behind bars.
+                        </p>
+                        <p class="full-description">
+                            As personalities clash and tempers flare, what begins as an open-and-shut case fractures into a war of bias, memory, race, and doubt. Every juror has something to hide. Every argument cuts deeper. And outside the courthouse, the world is already choosing sides.
+                        </p>
+                        <p class="full-description">
+                            Told in real-time, <em>The 13th Seat</em> is a taut, psychological courtroom drama that places the reader at the heart of the verdict. You are the thirteenth juror. You don't get a vote—but you won't escape judgment.
+                        </p>
+                        <div class="progress-info">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%;"></div>
+                            </div>
+                            <span class="progress-text">25% Complete</span>
+                        </div>
+                        <div class="expected-release">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Expected Release: Q2 2025</span>
+                        </div>
+                        <div class="sample-section" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #e2e8f0;">
+                            <button class="btn btn-primary sample-toggle" onclick="toggleSample()" style="margin-top: 1rem; display: block !important; background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; padding: 12px 24px !important; border-radius: 8px !important; border: none !important;">
+                                <i class="fas fa-book-reader"></i>
+                                Click for Sample
+                            </button>
+                            <div class="sample-content" id="sample-content" style="display: none;">
+                                <div class="sample-header">
+                                    <h4>Chapter 1: The Room</h4>
+                                    <p><strong>Time:</strong> 2:15 PM - 3:00 PM</p>
+                                </div>
+                                <div class="sample-text">
+                                    <p>The door seals behind them like a prison gate. Overhead, one fluorescent tube flickers with the rhythm of a dying heartbeat. The air is just a degree too warm, the result of a busted HVAC system and two government-issued box fans that do little more than shuffle the stale air.</p>
+                                    
+                                    <p>A plastic water cooler gurgles softly in the corner, its jug half-empty already. The room smells of old coffee and institutional disinfectant, with an undertone of something else—fear, perhaps, or the accumulated anxiety of countless deliberations that have taken place within these beige walls.</p>
+                                    
+                                    <p>Twelve people who are no longer strangers—not after three weeks locked away together in the Marriott downtown, shepherded between hotel and courthouse like prisoners themselves. Each carries the weight of Marcus Williams's future. But they also carry the tensions of forced proximity and sleepless nights, each alone in identical hotel rooms, wrestling with their conscience.</p>
+                                    
+                                    <p>Diane Washington adjusts her blazer and surveys the room with the practiced eye of someone accustomed to taking charge. At forty-two, she has spent two decades climbing corporate ladders, and she recognizes the dynamics at play here—though weeks of sequestration have made these dynamics infinitely more complex. Alliances have formed over room service dinners. Resentments have festered over stolen newspaper sections and elevator small talk.</p>
+                                    
+                                    <p>"Well," she says, her voice cutting through the uncomfortable silence, "I suppose we should begin."</p>
+                                    
+                                    <p>"Begin what?" Carmen Rodriguez's voice carries the weight of experience. "Begin deciding if we're going to bury a nineteen-year-old kid in concrete for the rest of his life?"</p>
+                                    
+                                    <p>"Begin following the law," Frank Kowalski counters, his prosthetic hand clenching. "Begin doing what we swore to do."</p>
+                                    
+                                    <p>"The law." Carmen lets out a bitter laugh. "You mean the same law that put my son in handcuffs for walking home from school? That law?"</p>
+                                    
+                                    <p>"We're not here to relitigate the entire criminal justice system—" Alexander Reed starts, his Patek Philippe catching the light.</p>
+                                    
+                                    <p>"No?" Zara Johnson's voice cuts through, sharp as a razor. "Then why are we here? Because from where I'm sitting, that's exactly what we're doing. Every time a Black teenager ends up in that defendant's chair, we're putting the whole damn system on trial."</p>
+                                    
+                                    <p>Ruth Goldstein's wire-rimmed glasses catch the fluorescent light as she speaks, her voice soft but carrying. "Perhaps we're here to prove the system can work. If we let it."</p>
+                                    
+                                    <p>The others arrange themselves around the table, their seating choices reflecting three weeks of alliances and animosities. Kevin Chen slides in beside Ruth—their unlikely friendship forged over shared complaints about the hotel's terrible Wi-Fi. Sofia Restrepo takes the seat closest to where a window should be, as if seeking escape routes that don't exist. A small pride flag pin on her blazer lapel catches the light—a quiet statement in a room full of loud opinions.</p>
+                                    
+                                    <p>Tommy Castellano settles heavily in his chair, his bulk seeming to take up more space than it should. "Back home, you don't start 'family business' without some whiskey and a basement table. And maybe a few guys you trust." His grin fades at the silence that follows. "Tough room."</p>
+                                    
+                                    <p>"This isn't a joke, Tommy," Sofia says, her teacher's patience fraying. "And it's not a scene from The Godfather."</p>
+                                    
+                                    <p>"No?" His voice hardens. "Because from where I'm sitting, it looks exactly like that. Twelve people in a room, deciding someone's fate. Only difference is, we're doing it legal."</p>
+                                    
+                                    <p>"First order of business," Diane cuts in, her corporate training kicking in, "we need to elect a foreperson."</p>
+                                    
+                                    <p>"You seem to have already elected yourself," Tommy mutters. "Just like you've been running the show since day one."</p>
+                                    
+                                    <p>"This ain't another corporate restructuring project, Diane," Carmen says, absently touching the scar above her left eyebrow. "This is a kid's life. A real life. Not something you get to bullet-point on your next promotion."</p>
+                                    
+                                    <p>"We all know what's at stake, Carmen. But without order, this turns into chaos—and nobody wins." Sarah Beth's fingers traced the Bible's worn edges.</p>
+                                    
+                                    <p>"Order?" Zara's laugh is sharp enough to cut. "Is that what you call it when a cop decides a Black teenager doesn't belong somewhere? Order?"</p>
+                                    
+                                    <p>The room fell silent. Carmen's earlier words hung in the air like smoke, acrid and inescapable. This wasn't about profit margins or market share. This was about Marcus Williams, nineteen years old, sitting in a cell somewhere, waiting for twelve people who knew each other's coffee preferences and morning routines to decide whether he'd spend the rest of his life in prison.</p>
+                                    
+                                    <p>"All in favor of Diane as foreperson?" Ruth asked, her voice carrying the weight of eight decades of watching people make impossible decisions.</p>
+                                    
+                                    <p>Hands rose around the table—some quickly, others with visible reluctance. It wasn't unanimous, but it was enough.</p>
+                                    
+                                    <p>"Thank you," Diane said, reaching for the jury instructions. "Now, before we take any votes, let's be clear about what we're deciding. The People of the State of New York versus Marcus Williams. Murder in the Second Degree in the death of Police Officer David Brennan."</p>
+                                    
+                                    <p>"Say his name again," Frank said, his voice tight. "Officer David Brennan. Because some of us seemed to have forgotten there were two people in this story."</p>
+                                    
+                                    <p>"Nobody forgot, Frank. We just remember different things." Carmen's words landed like stones in still water.</p>
+                                    
+                                    <p>"Write 'guilty' or 'not guilty'—no names," Diane said, tearing paper from a legal pad. "Let's see where we stand."</p>
+                                    
+                                    <p>The scratching of pens filled the silence. Kevin stared at his blank slip, pen hovering. His brain wanted numbers, probabilities—not a yes or no that could cage a kid forever. Frank wrote "GUILTY" in block letters, each stroke carrying the weight of conviction. Sofia's pen hovered, caught between evidence and instinct.</p>
+                                    
+                                    <p>"Seven guilty," Diane announced after collecting the folded slips. "Four not guilty. One undecided."</p>
+                                    
+                                    <p>The room went still. Not even the water cooler gurgled.</p>
+                                    
+                                    <p>The numbers hit them like a physical force. Seven to four to one. Not the unanimous verdict required for conviction, but close enough to suggest this wouldn't be quick. Twelve people, twelve perspectives, and only one path forward: they must reach unanimous agreement, or Marcus Williams faced a mistrial and another jury, another roll of the dice with his future. More months in detention, waiting for a new trial, adding to the year he's already spent behind bars.</p>
+                                    
+                                    <p>The flickering fluorescent light above pulsed faster now, as if counting down to a verdict none of them were ready to give.</p>
+                                </div>
+                                <div class="sample-continue">
+                                    <p>Continue reading on Amazon when released...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin section for adding upcoming books -->
+            <div class="add-upcoming-section admin-only" style="display: none;">
+                <button class="btn btn-primary" onclick="showAddUpcomingForm()">
+                    <i class="fas fa-plus"></i>
+                    Add Upcoming Book
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-connect">
+                    <a href="mailto:michaelknowles.2025@gmail.com" class="footer-email" title="Connect with me">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Michael Knowles. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
