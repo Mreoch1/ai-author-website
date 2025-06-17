@@ -123,25 +123,27 @@
                 <h2>Published Novels</h2>
                 <p>Explore stories crafted by artificial intelligence, available on Amazon KDP</p>
             </div>
-            <div class="novels-grid" id="novels-grid">
-                <!-- Novels will be dynamically loaded here -->
-                <div class="novel-placeholder">
-                    <div class="placeholder-content">
-                        <i class="fas fa-book-open"></i>
-                        <h3>Coming Soon</h3>
-                        <p>New AI-generated novels are being added regularly. Check back soon for the latest releases!</p>
+            <div class="novels-grid">
+                <div class="novel-card">
+                    <div class="novel-cover">
+                        <img src="https://images-na.ssl-images-amazon.com/images/P/B0F7J2MGND.01.L.jpg" alt="All the Ways We Stay" loading="lazy">
+                    </div>
+                    <div class="novel-info">
+                        <div class="novel-header">
+                            <span class="novel-genre">Contemporary Fiction</span>
+                            <h3>All the Ways We Stay</h3>
+                        </div>
+                        <div class="novel-description">
+                            <p>After the sudden death of her estranged brother, June Merrin returns to her childhood home in Harbor Springs, a quiet northern Michigan town cloaked in late autumn's chill. She expects only grief and paperwork—but finds herself named joint guardian of her eight-year-old niece, Poppy, alongside her brother's ex, Cal, a man she barely knows.<br><br>As snow begins to fall and old wounds resurface, June is forced to confront the life she left behind, the memories she buried, and the unexpected pull of family. Together in a weathered house filled with silence and echoes, June, Cal, and Poppy must navigate grief, resentment, and the fragile threads of hope that bind them.</p>
+                        </div>
+                        <div class="novel-actions">
+                            <a href="https://www.amazon.com/dp/B0F7J2MGND" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                <i class="fab fa-amazon"></i>
+                                View on Amazon
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="add-novel-section admin-only" style="display: none;">
-                <button class="btn btn-primary" onclick="showAddNovelForm()">
-                    <i class="fas fa-plus"></i>
-                    Add New Novel
-                </button>
-                <button class="btn btn-secondary" onclick="updateExistingBook()" style="margin-left: 1rem;">
-                    <i class="fas fa-sync"></i>
-                    Fix Current Book Data
-                </button>
             </div>
         </div>
     </section>
