@@ -1018,10 +1018,16 @@ function handleInterest(bookId, action) {
 
 function updateInterestDisplay(bookId) {
     console.log('updateInterestDisplay called for:', bookId);
+    
+    // Double-check data from localStorage
+    const savedData = JSON.parse(localStorage.getItem('interestData') || '{}');
+    console.log('Saved localStorage data:', savedData);
+    
     const data = interestData[bookId];
     const total = data.likes + data.dislikes;
     
     console.log('Data for', bookId, ':', data);
+    console.log('Total votes:', total);
     
     // Update counts
     const likesElement = document.getElementById(`${bookId}-likes`);
@@ -1102,9 +1108,16 @@ function showInterestFeedback(bookId, action, isNewVote) {
 
 // Initialize interest displays on page load
 function initializeInterestGauges() {
-    Object.keys(interestData).forEach(bookId => {
-        updateInterestDisplay(bookId);
-    });
+    console.log('Initializing interest gauges...');
+    console.log('Available books:', Object.keys(interestData));
+    
+    // Wait a bit for DOM to be fully ready
+    setTimeout(() => {
+        Object.keys(interestData).forEach(bookId => {
+            console.log(`Initializing gauge for ${bookId}`);
+            updateInterestDisplay(bookId);
+        });
+    }, 100);
 }
 
 // Make handleInterest globally available immediately
@@ -1114,6 +1127,25 @@ window.handleInterest = handleInterest;
 window.testInterest = function() {
     console.log('Testing interest function...');
     handleInterest('thirteenth-seat', 'like');
+};
+
+// Add a function to manually refresh all displays
+window.refreshInterestDisplays = function() {
+    console.log('Manually refreshing all interest displays...');
+    console.log('Current interestData:', interestData);
+    console.log('Current userVotes:', userVotes);
+    
+    // Re-read from localStorage
+    interestData = JSON.parse(localStorage.getItem('interestData')) || {
+        'thirteenth-seat': { likes: 0, dislikes: 0 },
+        'audit': { likes: 0, dislikes: 0 }
+    };
+    userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
+    
+    // Update all displays
+    Object.keys(interestData).forEach(bookId => {
+        updateInterestDisplay(bookId);
+    });
 };
 
 // Ensure sample toggle functions are globally available after everything loads
