@@ -966,14 +966,128 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Interest Gauge System
+let interestData = JSON.parse(localStorage.getItem('interestData')) || {
+    'thirteenth-seat': { likes: 0, dislikes: 0 },
+    'audit': { likes: 0, dislikes: 0 }
+};
+
+let userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
+
+function handleInterest(bookId, action) {
+    // Check if user has already voted for this book
+    if (userVotes[bookId]) {
+        // If clicking the same button, remove vote
+        if (userVotes[bookId] === action) {
+            interestData[bookId][userVotes[bookId]]--;
+            delete userVotes[bookId];
+        } else {
+            // Switch vote
+            interestData[bookId][userVotes[bookId]]--;
+            interestData[bookId][action]++;
+            userVotes[bookId] = action;
+        }
+    } else {
+        // New vote
+        interestData[bookId][action]++;
+        userVotes[bookId] = action;
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('interestData', JSON.stringify(interestData));
+    localStorage.setItem('userVotes', JSON.stringify(userVotes));
+    
+    // Update UI
+    updateInterestDisplay(bookId);
+    
+    // Show feedback
+    showInterestFeedback(bookId, action, userVotes[bookId] === action);
+}
+
+function updateInterestDisplay(bookId) {
+    const data = interestData[bookId];
+    const total = data.likes + data.dislikes;
+    
+    // Update counts
+    document.getElementById(`${bookId}-likes`).textContent = data.likes;
+    document.getElementById(`${bookId}-dislikes`).textContent = data.dislikes;
+    
+    // Update progress bar
+    const percentage = total > 0 ? (data.likes / total) * 100 : 50;
+    document.getElementById(`${bookId}-bar`).style.width = `${percentage}%`;
+    
+    // Update text
+    const textElement = document.getElementById(`${bookId}-text`);
+    if (total === 0) {
+        textElement.textContent = "Be the first to show your interest!";
+    } else {
+        const likePercentage = Math.round(percentage);
+        textElement.textContent = `${likePercentage}% positive (${total} total votes)`;
+    }
+    
+    // Update button states
+    const likeBtn = document.querySelector(`[data-book="${bookId}"][data-action="like"]`);
+    const dislikeBtn = document.querySelector(`[data-book="${bookId}"][data-action="dislike"]`);
+    
+    // Remove active states
+    likeBtn.classList.remove('active');
+    dislikeBtn.classList.remove('active');
+    
+    // Add active state if user voted
+    if (userVotes[bookId] === 'like') {
+        likeBtn.classList.add('active');
+    } else if (userVotes[bookId] === 'dislike') {
+        dislikeBtn.classList.add('active');
+    }
+    
+    // Add voted class to gauge
+    const gauge = likeBtn.closest('.interest-gauge');
+    if (userVotes[bookId]) {
+        gauge.classList.add('voted');
+    } else {
+        gauge.classList.remove('voted');
+    }
+}
+
+function showInterestFeedback(bookId, action, isNewVote) {
+    const bookTitles = {
+        'thirteenth-seat': 'The 13th Seat',
+        'audit': 'The Audit'
+    };
+    
+    let message;
+    if (isNewVote) {
+        message = `Thanks for ${action === 'like' ? 'liking' : 'disliking'} "${bookTitles[bookId]}"! Your feedback helps shape future stories.`;
+    } else {
+        message = `Removed your vote for "${bookTitles[bookId]}". Feel free to vote again anytime!`;
+    }
+    
+    showNotification(message, isNewVote ? 'success' : 'info');
+}
+
+// Initialize interest displays on page load
+function initializeInterestGauges() {
+    Object.keys(interestData).forEach(bookId => {
+        updateInterestDisplay(bookId);
+    });
+}
+
+// Make handleInterest globally available
+window.handleInterest = handleInterest;
+
 // Ensure sample toggle functions are globally available after everything loads
 document.addEventListener('DOMContentLoaded', function() {
     // Force global attachment for production builds
     window.toggleSample = toggleSample;
     window.toggleAuditSample = toggleAuditSample;
+    window.handleInterest = handleInterest;
+    
+    // Initialize interest gauges
+    initializeInterestGauges();
     
     console.log('Sample functions attached:', { 
         toggleSample: typeof window.toggleSample, 
-        toggleAuditSample: typeof window.toggleAuditSample 
+        toggleAuditSample: typeof window.toggleAuditSample,
+        handleInterest: typeof window.handleInterest 
     });
 }); 

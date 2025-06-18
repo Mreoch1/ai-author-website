@@ -320,6 +320,23 @@
                             <i class="fas fa-calendar-alt"></i>
                             <span>Expected Release: Q2 2025</span>
                         </div>
+                        <div class="interest-gauge">
+                            <h4>Reader Interest</h4>
+                            <div class="interest-buttons">
+                                <button class="interest-btn like-btn" data-book="thirteenth-seat" data-action="like" onclick="handleInterest('thirteenth-seat', 'like')">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span class="count" id="thirteenth-seat-likes">0</span>
+                                </button>
+                                <button class="interest-btn dislike-btn" data-book="thirteenth-seat" data-action="dislike" onclick="handleInterest('thirteenth-seat', 'dislike')">
+                                    <i class="fas fa-thumbs-down"></i>
+                                    <span class="count" id="thirteenth-seat-dislikes">0</span>
+                                </button>
+                            </div>
+                            <div class="interest-bar">
+                                <div class="interest-fill" id="thirteenth-seat-bar" style="width: 50%;"></div>
+                            </div>
+                            <p class="interest-text" id="thirteenth-seat-text">Be the first to show your interest!</p>
+                        </div>
                         <div class="sample-section" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #e2e8f0;">
                             <button class="btn btn-primary sample-toggle" data-sample="thirteenth-seat" onclick="toggleSample()" style="margin-top: 1rem; display: block !important; background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; padding: 12px 24px !important; border-radius: 8px !important; border: none !important;">
                                 <i class="fas fa-book-reader"></i>
@@ -431,6 +448,23 @@
                         <div class="expected-release">
                             <i class="fas fa-calendar-alt"></i>
                             <span>Expected Release: Q3 2025</span>
+                        </div>
+                        <div class="interest-gauge">
+                            <h4>Reader Interest</h4>
+                            <div class="interest-buttons">
+                                <button class="interest-btn like-btn" data-book="audit" data-action="like" onclick="handleInterest('audit', 'like')">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span class="count" id="audit-likes">0</span>
+                                </button>
+                                <button class="interest-btn dislike-btn" data-book="audit" data-action="dislike" onclick="handleInterest('audit', 'dislike')">
+                                    <i class="fas fa-thumbs-down"></i>
+                                    <span class="count" id="audit-dislikes">0</span>
+                                </button>
+                            </div>
+                            <div class="interest-bar">
+                                <div class="interest-fill" id="audit-bar" style="width: 50%;"></div>
+                            </div>
+                            <p class="interest-text" id="audit-text">Be the first to show your interest!</p>
                         </div>
                         <div class="sample-section" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #e2e8f0;">
                                                          <button class="btn btn-primary sample-toggle" data-sample="audit" onclick="toggleAuditSample()" style="margin-top: 1rem; display: block !important; background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; padding: 12px 24px !important; border-radius: 8px !important; border: none !important;">
