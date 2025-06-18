@@ -91,28 +91,52 @@ document.addEventListener('DOMContentLoaded', function() {
         showNotification('Add upcoming book feature coming soon! For now, edit the HTML directly to add new upcoming books.', 'info');
     };
     
-    // Toggle sample content display
-    window.toggleSample = function() {
-        const sampleContent = document.getElementById('sample-content');
-        const toggleButton = document.querySelector('.sample-toggle');
-        
-        if (sampleContent.style.display === 'none' || sampleContent.style.display === '') {
-            sampleContent.style.display = 'block';
-            toggleButton.innerHTML = '<i class="fas fa-book-open"></i> Hide Sample';
-            
-            // Smooth scroll to sample content
-            setTimeout(() => {
-                sampleContent.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'nearest' 
-                });
-            }, 100);
-        } else {
-            sampleContent.style.display = 'none';
-            toggleButton.innerHTML = '<i class="fas fa-book-reader"></i> Click for Sample';
-        }
-    };
+
 });
+
+// Toggle sample content display functions (must be global for onclick handlers)
+window.toggleSample = function() {
+    const sampleContent = document.getElementById('sample-content');
+    const toggleButton = document.querySelector('.sample-toggle');
+    
+    if (sampleContent.style.display === 'none' || sampleContent.style.display === '') {
+        sampleContent.style.display = 'block';
+        toggleButton.innerHTML = '<i class="fas fa-book-open"></i> Hide Sample';
+        
+        // Smooth scroll to sample content
+        setTimeout(() => {
+            sampleContent.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }, 100);
+    } else {
+        sampleContent.style.display = 'none';
+        toggleButton.innerHTML = '<i class="fas fa-book-reader"></i> Click for Sample';
+    }
+};
+
+// Toggle sample content display for The Audit
+window.toggleAuditSample = function() {
+    const sampleContent = document.getElementById('audit-sample-content');
+    const toggleButton = document.querySelector('[onclick="toggleAuditSample()"]');
+    
+    if (sampleContent.style.display === 'none' || sampleContent.style.display === '') {
+        sampleContent.style.display = 'block';
+        toggleButton.innerHTML = '<i class="fas fa-book-open"></i> Hide Sample';
+        
+        // Smooth scroll to sample content
+        setTimeout(() => {
+            sampleContent.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }, 100);
+    } else {
+        sampleContent.style.display = 'none';
+        toggleButton.innerHTML = '<i class="fas fa-book-reader"></i> Click for Sample';
+    }
+};
 
 // Novel management - Initialize with published novels
 let novels = JSON.parse(localStorage.getItem('novels')) || [
