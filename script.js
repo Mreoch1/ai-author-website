@@ -975,6 +975,15 @@ let interestData = JSON.parse(localStorage.getItem('interestData')) || {
 let userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
 
 function handleInterest(bookId, action) {
+    console.log('handleInterest called:', bookId, action);
+    console.log('Current data:', interestData);
+    console.log('User votes:', userVotes);
+    
+    // Ensure the book exists in our data
+    if (!interestData[bookId]) {
+        interestData[bookId] = { likes: 0, dislikes: 0 };
+    }
+    
     // Check if user has already voted for this book
     if (userVotes[bookId]) {
         // If clicking the same button, remove vote
@@ -993,6 +1002,9 @@ function handleInterest(bookId, action) {
         userVotes[bookId] = action;
     }
     
+    console.log('Updated data:', interestData);
+    console.log('Updated votes:', userVotes);
+    
     // Save to localStorage
     localStorage.setItem('interestData', JSON.stringify(interestData));
     localStorage.setItem('userVotes', JSON.stringify(userVotes));
@@ -1005,47 +1017,70 @@ function handleInterest(bookId, action) {
 }
 
 function updateInterestDisplay(bookId) {
+    console.log('updateInterestDisplay called for:', bookId);
     const data = interestData[bookId];
     const total = data.likes + data.dislikes;
     
+    console.log('Data for', bookId, ':', data);
+    
     // Update counts
-    document.getElementById(`${bookId}-likes`).textContent = data.likes;
-    document.getElementById(`${bookId}-dislikes`).textContent = data.dislikes;
+    const likesElement = document.getElementById(`${bookId}-likes`);
+    const dislikesElement = document.getElementById(`${bookId}-dislikes`);
+    
+    console.log('Elements found:', { 
+        likes: !!likesElement, 
+        dislikes: !!dislikesElement 
+    });
+    
+    if (likesElement) likesElement.textContent = data.likes;
+    if (dislikesElement) dislikesElement.textContent = data.dislikes;
     
     // Update progress bar
     const percentage = total > 0 ? (data.likes / total) * 100 : 50;
-    document.getElementById(`${bookId}-bar`).style.width = `${percentage}%`;
+    const barElement = document.getElementById(`${bookId}-bar`);
+    if (barElement) barElement.style.width = `${percentage}%`;
     
     // Update text
     const textElement = document.getElementById(`${bookId}-text`);
-    if (total === 0) {
-        textElement.textContent = "Be the first to show your interest!";
-    } else {
-        const likePercentage = Math.round(percentage);
-        textElement.textContent = `${likePercentage}% positive (${total} total votes)`;
+    if (textElement) {
+        if (total === 0) {
+            textElement.textContent = "Be the first to show your interest!";
+        } else {
+            const likePercentage = Math.round(percentage);
+            textElement.textContent = `${likePercentage}% positive (${total} total votes)`;
+        }
     }
     
     // Update button states
     const likeBtn = document.querySelector(`[data-book="${bookId}"][data-action="like"]`);
     const dislikeBtn = document.querySelector(`[data-book="${bookId}"][data-action="dislike"]`);
     
-    // Remove active states
-    likeBtn.classList.remove('active');
-    dislikeBtn.classList.remove('active');
+    console.log('Button elements found:', { 
+        like: !!likeBtn, 
+        dislike: !!dislikeBtn 
+    });
     
-    // Add active state if user voted
-    if (userVotes[bookId] === 'like') {
-        likeBtn.classList.add('active');
-    } else if (userVotes[bookId] === 'dislike') {
-        dislikeBtn.classList.add('active');
-    }
-    
-    // Add voted class to gauge
-    const gauge = likeBtn.closest('.interest-gauge');
-    if (userVotes[bookId]) {
-        gauge.classList.add('voted');
-    } else {
-        gauge.classList.remove('voted');
+    if (likeBtn && dislikeBtn) {
+        // Remove active states
+        likeBtn.classList.remove('active');
+        dislikeBtn.classList.remove('active');
+        
+        // Add active state if user voted
+        if (userVotes[bookId] === 'like') {
+            likeBtn.classList.add('active');
+        } else if (userVotes[bookId] === 'dislike') {
+            dislikeBtn.classList.add('active');
+        }
+        
+        // Add voted class to gauge
+        const gauge = likeBtn.closest('.interest-gauge');
+        if (gauge) {
+            if (userVotes[bookId]) {
+                gauge.classList.add('voted');
+            } else {
+                gauge.classList.remove('voted');
+            }
+        }
     }
 }
 
@@ -1072,8 +1107,14 @@ function initializeInterestGauges() {
     });
 }
 
-// Make handleInterest globally available
+// Make handleInterest globally available immediately
 window.handleInterest = handleInterest;
+
+// Also add a simple test function
+window.testInterest = function() {
+    console.log('Testing interest function...');
+    handleInterest('thirteenth-seat', 'like');
+};
 
 // Ensure sample toggle functions are globally available after everything loads
 document.addEventListener('DOMContentLoaded', function() {
