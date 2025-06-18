@@ -1023,11 +1023,13 @@ function handleInterest(bookId, action) {
 function updateInterestDisplay(bookId) {
     console.log('updateInterestDisplay called for:', bookId);
     
-    // Double-check data from localStorage
-    const savedData = JSON.parse(localStorage.getItem('interestData') || '{}');
-    console.log('Saved localStorage data:', savedData);
+    // ALWAYS read fresh data from localStorage
+    interestData = JSON.parse(localStorage.getItem('interestData') || '{}');
+    userVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
     
-    const data = interestData[bookId];
+    console.log('Fresh data loaded:', interestData);
+    
+    const data = interestData[bookId] || { likes: 0, dislikes: 0 };
     
     console.log('Data for', bookId, ':', data);
     console.log('Data.likes:', data.likes, 'typeof:', typeof data.likes);
