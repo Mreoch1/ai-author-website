@@ -1009,6 +1009,10 @@ function handleInterest(bookId, action) {
     localStorage.setItem('interestData', JSON.stringify(interestData));
     localStorage.setItem('userVotes', JSON.stringify(userVotes));
     
+    // Verify save worked
+    const savedCheck = JSON.parse(localStorage.getItem('interestData'));
+    console.log('Verification - data saved correctly:', savedCheck);
+    
     // Update UI
     updateInterestDisplay(bookId);
     
@@ -1024,9 +1028,12 @@ function updateInterestDisplay(bookId) {
     console.log('Saved localStorage data:', savedData);
     
     const data = interestData[bookId];
-    const total = data.likes + data.dislikes;
     
     console.log('Data for', bookId, ':', data);
+    console.log('Data.likes:', data.likes, 'typeof:', typeof data.likes);
+    console.log('Data.dislikes:', data.dislikes, 'typeof:', typeof data.dislikes);
+    
+    const total = Number(data.likes) + Number(data.dislikes);
     console.log('Total votes:', total);
     
     // Update counts
@@ -1038,8 +1045,16 @@ function updateInterestDisplay(bookId) {
         dislikes: !!dislikesElement 
     });
     
-    if (likesElement) likesElement.textContent = data.likes;
-    if (dislikesElement) dislikesElement.textContent = data.dislikes;
+    if (likesElement) {
+        console.log(`Setting ${bookId} likes to:`, data.likes);
+        likesElement.textContent = data.likes;
+        console.log(`Likes element now shows:`, likesElement.textContent);
+    }
+    if (dislikesElement) {
+        console.log(`Setting ${bookId} dislikes to:`, data.dislikes);
+        dislikesElement.textContent = data.dislikes;
+        console.log(`Dislikes element now shows:`, dislikesElement.textContent);
+    }
     
     // Update progress bar
     const percentage = total > 0 ? (data.likes / total) * 100 : 50;
