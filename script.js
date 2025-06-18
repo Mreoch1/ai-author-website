@@ -966,218 +966,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Interest Gauge System
-let interestData = JSON.parse(localStorage.getItem('interestData')) || {
-    'thirteenth-seat': { likes: 0, dislikes: 0 },
-    'audit': { likes: 0, dislikes: 0 }
-};
 
-let userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
 
-function handleInterest(bookId, action) {
-    console.log('handleInterest called:', bookId, action);
-    console.log('Current data:', interestData);
-    console.log('User votes:', userVotes);
-    
-    // Ensure the book exists in our data
-    if (!interestData[bookId]) {
-        interestData[bookId] = { likes: 0, dislikes: 0 };
-    }
-    
-    // Check if user has already voted for this book
-    if (userVotes[bookId]) {
-        // If clicking the same button, remove vote
-        if (userVotes[bookId] === action) {
-            interestData[bookId][userVotes[bookId]]--;
-            delete userVotes[bookId];
-        } else {
-            // Switch vote
-            interestData[bookId][userVotes[bookId]]--;
-            interestData[bookId][action]++;
-            userVotes[bookId] = action;
-        }
-    } else {
-        // New vote
-        interestData[bookId][action]++;
-        userVotes[bookId] = action;
-    }
-    
-    console.log('Updated data:', interestData);
-    console.log('Updated votes:', userVotes);
-    
-    // Save to localStorage
-    localStorage.setItem('interestData', JSON.stringify(interestData));
-    localStorage.setItem('userVotes', JSON.stringify(userVotes));
-    
-    // Verify save worked
-    const savedCheck = JSON.parse(localStorage.getItem('interestData'));
-    console.log('Verification - data saved correctly:', savedCheck);
-    
-    // Update UI
-    updateInterestDisplay(bookId);
-    
-    // Show feedback
-    showInterestFeedback(bookId, action, userVotes[bookId] === action);
-}
 
-function updateInterestDisplay(bookId) {
-    console.log('updateInterestDisplay called for:', bookId);
-    
-    // ALWAYS read fresh data from localStorage
-    interestData = JSON.parse(localStorage.getItem('interestData') || '{}');
-    userVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
-    
-    console.log('Fresh data loaded:', interestData);
-    
-    const data = interestData[bookId] || { likes: 0, dislikes: 0 };
-    
-    console.log('Data for', bookId, ':', data);
-    console.log('Data.likes:', data.likes, 'typeof:', typeof data.likes);
-    console.log('Data.dislikes:', data.dislikes, 'typeof:', typeof data.dislikes);
-    
-    const total = Number(data.likes) + Number(data.dislikes);
-    console.log('Total votes:', total);
-    
-    // Update counts
-    const likesElement = document.getElementById(`${bookId}-likes`);
-    const dislikesElement = document.getElementById(`${bookId}-dislikes`);
-    
-    console.log('Elements found:', { 
-        likes: !!likesElement, 
-        dislikes: !!dislikesElement 
-    });
-    
-    if (likesElement) {
-        console.log(`Setting ${bookId} likes to:`, data.likes);
-        likesElement.textContent = data.likes;
-        console.log(`Likes element now shows:`, likesElement.textContent);
-    }
-    if (dislikesElement) {
-        console.log(`Setting ${bookId} dislikes to:`, data.dislikes);
-        dislikesElement.textContent = data.dislikes;
-        console.log(`Dislikes element now shows:`, dislikesElement.textContent);
-    }
-    
-    // Update progress bar
-    const percentage = total > 0 ? (data.likes / total) * 100 : 50;
-    const barElement = document.getElementById(`${bookId}-bar`);
-    if (barElement) barElement.style.width = `${percentage}%`;
-    
-    // Update text
-    const textElement = document.getElementById(`${bookId}-text`);
-    if (textElement) {
-        if (total === 0) {
-            textElement.textContent = "Be the first to show your interest!";
-        } else {
-            const likePercentage = Math.round(percentage);
-            textElement.textContent = `${likePercentage}% positive (${total} total votes)`;
-        }
-    }
-    
-    // Update button states
-    const likeBtn = document.querySelector(`[data-book="${bookId}"][data-action="like"]`);
-    const dislikeBtn = document.querySelector(`[data-book="${bookId}"][data-action="dislike"]`);
-    
-    console.log('Button elements found:', { 
-        like: !!likeBtn, 
-        dislike: !!dislikeBtn 
-    });
-    
-    if (likeBtn && dislikeBtn) {
-        // Remove active states
-        likeBtn.classList.remove('active');
-        dislikeBtn.classList.remove('active');
-        
-        // Add active state if user voted
-        if (userVotes[bookId] === 'like') {
-            likeBtn.classList.add('active');
-        } else if (userVotes[bookId] === 'dislike') {
-            dislikeBtn.classList.add('active');
-        }
-        
-        // Add voted class to gauge
-        const gauge = likeBtn.closest('.interest-gauge');
-        if (gauge) {
-            if (userVotes[bookId]) {
-                gauge.classList.add('voted');
-            } else {
-                gauge.classList.remove('voted');
-            }
-        }
-    }
-}
 
-function showInterestFeedback(bookId, action, isNewVote) {
-    const bookTitles = {
-        'thirteenth-seat': 'The 13th Seat',
-        'audit': 'The Audit'
-    };
-    
-    let message;
-    if (isNewVote) {
-        message = `Thanks for ${action === 'like' ? 'liking' : 'disliking'} "${bookTitles[bookId]}"! Your feedback helps shape future stories.`;
-    } else {
-        message = `Removed your vote for "${bookTitles[bookId]}". Feel free to vote again anytime!`;
-    }
-    
-    showNotification(message, isNewVote ? 'success' : 'info');
-}
 
-// Initialize interest displays on page load
-function initializeInterestGauges() {
-    console.log('Initializing interest gauges...');
-    console.log('Available books:', Object.keys(interestData));
-    
-    // Wait a bit for DOM to be fully ready
-    setTimeout(() => {
-        Object.keys(interestData).forEach(bookId => {
-            console.log(`Initializing gauge for ${bookId}`);
-            updateInterestDisplay(bookId);
-        });
-    }, 100);
-}
 
-// Make handleInterest globally available immediately
-window.handleInterest = handleInterest;
 
-// Also add a simple test function
-window.testInterest = function() {
-    console.log('Testing interest function...');
-    handleInterest('thirteenth-seat', 'like');
-};
-
-// Add a function to manually refresh all displays
-window.refreshInterestDisplays = function() {
-    console.log('Manually refreshing all interest displays...');
-    console.log('Current interestData:', interestData);
-    console.log('Current userVotes:', userVotes);
-    
-    // Re-read from localStorage
-    interestData = JSON.parse(localStorage.getItem('interestData')) || {
-        'thirteenth-seat': { likes: 0, dislikes: 0 },
-        'audit': { likes: 0, dislikes: 0 }
-    };
-    userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
-    
-    // Update all displays
-    Object.keys(interestData).forEach(bookId => {
-        updateInterestDisplay(bookId);
-    });
-};
 
 // Ensure sample toggle functions are globally available after everything loads
 document.addEventListener('DOMContentLoaded', function() {
     // Force global attachment for production builds
     window.toggleSample = toggleSample;
     window.toggleAuditSample = toggleAuditSample;
-    window.handleInterest = handleInterest;
-    
-    // Initialize interest gauges
-    initializeInterestGauges();
     
     console.log('Sample functions attached:', { 
         toggleSample: typeof window.toggleSample, 
-        toggleAuditSample: typeof window.toggleAuditSample,
-        handleInterest: typeof window.handleInterest 
+        toggleAuditSample: typeof window.toggleAuditSample
     });
 }); 
