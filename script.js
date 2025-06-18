@@ -94,10 +94,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// Toggle sample content display functions (must be global for onclick handlers)
-window.toggleSample = function() {
+// Toggle sample content display functions (attached to window for global access)
+function toggleSample() {
     const sampleContent = document.getElementById('sample-content');
-    const toggleButton = document.querySelector('.sample-toggle');
+    const toggleButton = document.querySelector('[data-sample="thirteenth-seat"]');
     
     if (sampleContent.style.display === 'none' || sampleContent.style.display === '') {
         sampleContent.style.display = 'block';
@@ -114,12 +114,12 @@ window.toggleSample = function() {
         sampleContent.style.display = 'none';
         toggleButton.innerHTML = '<i class="fas fa-book-reader"></i> Click for Sample';
     }
-};
+}
 
 // Toggle sample content display for The Audit
-window.toggleAuditSample = function() {
+function toggleAuditSample() {
     const sampleContent = document.getElementById('audit-sample-content');
-    const toggleButton = document.querySelector('[onclick="toggleAuditSample()"]');
+    const toggleButton = document.querySelector('[data-sample="audit"]');
     
     if (sampleContent.style.display === 'none' || sampleContent.style.display === '') {
         sampleContent.style.display = 'block';
@@ -136,7 +136,11 @@ window.toggleAuditSample = function() {
         sampleContent.style.display = 'none';
         toggleButton.innerHTML = '<i class="fas fa-book-reader"></i> Click for Sample';
     }
-};
+}
+
+// Make functions globally available
+window.toggleSample = toggleSample;
+window.toggleAuditSample = toggleAuditSample;
 
 // Novel management - Initialize with published novels
 let novels = JSON.parse(localStorage.getItem('novels')) || [
@@ -960,4 +964,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // localStorage.setItem('novels', JSON.stringify(novels));
         // loadNovels();
     }
+});
+
+// Ensure sample toggle functions are globally available after everything loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Force global attachment for production builds
+    window.toggleSample = toggleSample;
+    window.toggleAuditSample = toggleAuditSample;
+    
+    console.log('Sample functions attached:', { 
+        toggleSample: typeof window.toggleSample, 
+        toggleAuditSample: typeof window.toggleAuditSample 
+    });
 }); 
